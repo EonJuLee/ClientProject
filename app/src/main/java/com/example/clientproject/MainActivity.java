@@ -11,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class MainActivity extends AppCompatActivity {
 
     private static String KEY = "KEY";
+    private String DATA = "Nice to meet you";
     private TextView textView;
 
     @Override
@@ -50,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
                 ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
                 String inputString = (String) in.readObject();
+
+                ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
+                out.writeObject(DATA);
+                out.flush();
 
                 if(in==null){
                     Log.d("Socket","in is null");
